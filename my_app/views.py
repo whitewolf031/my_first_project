@@ -2,17 +2,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Person
-from .serialziers import PersonModelSerializer
+from .serialziers import PersonSerializer
 
 class PersonListApiView(APIView):
     def get(self, request):
         persons = Person.objects.all()
-        serializer = PersonModelSerializer(persons, many=True)
+        serializer = PersonSerializer(persons, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PersonCreateApiView(APIView):
     def post(self, request):
-        serializer = PersonModelSerializer(data=request.data)
+        serializer = PersonSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
