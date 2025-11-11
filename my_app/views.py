@@ -10,6 +10,7 @@ class PersonListApiView(APIView):
         serializer = PersonModelSerializer(persons, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class PersonCreateApiView(APIView):
     def post(self, request):
         serializer = PersonModelSerializer(data=request.data)
         if serializer.is_valid():
