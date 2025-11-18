@@ -5,9 +5,8 @@ from products.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("persons/", PersonListApiView.as_view(), name="odamalrni korish"),
-    path("person/create/", PersonCreateApiView.as_view(), name="Odam yaratish"),
-
     #products
-    path("products/", include("products.urls"), name="Products_update")
+    path("products/", include("products.urls"), name="Products_update"),
+    # person
+    path("person/", include("my_app.urls")),
 ]

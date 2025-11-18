@@ -1,19 +1,27 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics
 from .models import Person
 from .serialziers import PersonSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
 
-class PersonListApiView(APIView):
-    def get(self, request):
-        persons = Person.objects.all()
-        serializer = PersonSerializer(persons, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class PersonCrud(ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
 
-class PersonCreateApiView(APIView):
-    def post(self, request):
-        serializer = PersonSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class PersonCreate(generics.CreateAPIView):
+#     queryset = Person.objects.all()
+#     serializer_class = PersonSerializer
+#
+# class PersonList(generics.ListAPIView):
+#     queryset = Person.objects.all()
+#     serializer_class = PersonSerializer
+
+    # def get(self):
+    #     persons = Person.objects.all()
+    #     serializer = PersonSerializer(persons, many=True)
+    #     return Response(f"Ma'lumotlaringiz yaraldi {serializer.data}", status=status.HTTP_200_OK)
+
+# class PersonUpdate(generics.UpdateAPIView):
+#     queryset = Person.objects.all()
+#     serializer_class = PersonSerializer
